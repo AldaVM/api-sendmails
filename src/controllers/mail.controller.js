@@ -23,8 +23,8 @@ class Mail {
     const optionsMail = {
       recipient: process.env.RECIPIENT_MAIL_FREE_CLASS,
       sender: process.env.SENDER_MAIL_FREE_CLASS,
-      subject: `SOLICITUD CLASE DE PRUEBA`,
-      text,
+      subject: `SOLICITUD DE CLASE DE PRUEBA`,
+      text: "Interesado para inscribirse a una clase de prueba",
       html,
     };
 
