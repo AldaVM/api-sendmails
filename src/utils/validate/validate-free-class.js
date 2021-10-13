@@ -8,7 +8,7 @@ const freeClassSchema = checkSchema({
     },
   },
   telephone: {
-    isEmail: {
+    isLength: {
       errorMessage: "Correo con formato no valido",
       options: { min: 9, max: 15 },
     },
