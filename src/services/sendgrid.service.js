@@ -58,11 +58,12 @@ class MailService {
       subject: "test subject",
       text: "text by test",
       html: "<span>Test</span>",
-    }
+    },
+    customApiKey = ""
   ) {
     try {
       const { recipient, sender, subject, text, html } = options;
-      const apiKey = process.env.API_KEY_SENDGRID;
+      const apiKey = customApiKey;
       sendgrid.setApiKey(apiKey);
 
       const msg = {

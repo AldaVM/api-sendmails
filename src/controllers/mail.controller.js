@@ -1,11 +1,45 @@
 const { mailService } = require("../services");
-const genereHTMLContentMail = require("../helpers/generehtml.helper");
+const {
+  genereHTMLContentMail,
+  genereHTMLContentFreeClass,
+} = require("../helpers/generehtml.helper");
 
 let _mailService = null;
 
 class Mail {
   constructor(mailService) {
     _mailService = mailService;
+  }
+
+  async sendMailRegisterClass(req, res) {
+    const { names, dni, telephone } = req.body;
+
+    const html = genereHTMLContentFreeClass({
+      names,
+      telephone,
+      dni,
+    });
+
+    const optionsMail = {
+      recipient: process.env.RECIPIENT_MAIL_FREE_CLASS,
+      sender: process.env.SENDER_MAIL_FREE_CLASS,
+      subject: `SOLICITUD CLASE DE PRUEBA`,
+      text,
+      html,
+    };
+
+    const customAPIKey = process.env.API_KEY_SENDGRID_IMPERIUM;
+    const response = await _mailService.sendMailBySendgrid(
+      optionsMail,
+      customAPIKey
+    );
+
+    return res.status(response.status).json({
+      status: response.status,
+      message: response.message,
+      error: response.error,
+      messageRegister: registerContact.message,
+    });
   }
 
   async sendMail(req, res) {
@@ -25,8 +59,11 @@ class Mail {
       text,
       html,
     };
-
-    const response = await _mailService.sendMailBySendgrid(optionsMail);
+    const customAPIKey = process.env.API_KEY_SENDGRID;
+    const response = await _mailService.sendMailBySendgrid(
+      optionsMail,
+      customAPIKey
+    );
     const registerContact = await _mailService.toRegisterContactInDB(
       response.status,
       {
